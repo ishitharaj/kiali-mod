@@ -1684,6 +1684,25 @@ func NewRoutes(
 			HandlerFunc:   handlers.MetricsStats,
 			Authenticated: true,
 		},
+		// swagger:route GET /api/llm-assist llm assist
+		// ---
+		// Endpoint to get insights from the LLM assistant
+		//
+		//     Produces:
+		//     - application/json
+		//
+		//     Schemes: http, https
+		// responses:
+		//      500: internalError
+		//      200: llmResponse
+		{
+			"LLMAssist",
+			log.StatusLogName,
+			"GET",
+			"/api/llm-assist",
+			handlers.LLMHandler,
+			false,
+		},
 	}
 	return
 }

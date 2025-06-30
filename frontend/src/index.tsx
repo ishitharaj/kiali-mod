@@ -10,6 +10,7 @@ import '@patternfly/patternfly/patternfly.css';
 import '@patternfly/patternfly/patternfly-charts.css';
 import '@patternfly/patternfly/patternfly-charts-theme-dark.css';
 import '@patternfly/patternfly/patternfly-addons.css';
+import LLMAssistantWidget from 'components/LLMAssistantWidget/LLMAssistantWidget';
 
 // Enables ACE editor YAML themes
 import 'ace-builds/src-noconflict/mode-yaml';
@@ -52,4 +53,10 @@ if (!window.location.pathname.includes(rootBasename)) {
   router.navigate(`/${window.location.search}`, { replace: true });
 }
 
-ReactDOM.render(<RouterProvider router={router} />, document.getElementById('root') as HTMLElement);
+ReactDOM.render(
+  <>
+    <RouterProvider router={router} />
+    <LLMAssistantWidget />
+  </>,
+  document.getElementById('root') as HTMLElement
+);

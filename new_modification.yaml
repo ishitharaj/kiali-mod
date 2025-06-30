@@ -1,0 +1,69 @@
+
+🎯 GOAL:
+Help me implement a minimal MVP for an LLM-powered assistant in the [Kiali](https://github.com/kiali/kiali) project. This assistant should allow users to ask questions about service mesh behavior, and the system will fetch relevant metrics and graph data, build a sanitized prompt, and send it to a locally running LLM (e.g., via ollama run llama3) and return the result.
+
+🔧 BACKEND REQUIREMENTS (Go):
+- Create a new API handler in handlers/llm_assist.go.
+- Add a new HTTP endpoint: GET /api/llm-assist?q=...
+- Use existing business logic to fetch metrics, validations, and service graph data for the question.
+- Sanitize any potentially sensitive information (e.g., IPs, tokens, service names) before forming the prompt.
+- Construct a prompt for the LLM using this template:
+
+You are an observability assistant. Here's data:
+
+Graph: [REDACTED]
+
+Metrics: [REDACTED]
+
+Question: {{user question}}
+
+
+Respond with insights and potential root causes in plain language.
+
+- Run the LLM locally via:
+`go
+exec.Command("ollama", "run", "llama3", prompt)
+
+Return the response as JSON { "answer": "<LLM response>" }
+
+Add route registration in server/routes.go.
+
+
+🎨 FRONTEND REQUIREMENTS (React - Kiali UI):
+
+Create a new React component: <LLMAssistantWidget />.
+
+Add a floating chat icon in the UI (bottom right is fine).
+
+When clicked, it opens a chat drawer with an input box.
+
+On submit, send the question to /api/llm-assist?q=... via fetch.
+
+Display a loading spinner while waiting for response.
+
+Show the LLM's response in a chat bubble UI.
+
+
+💡 Bonus (Optional):
+
+Add a settings.yaml config flag (e.g., llm_enabled: true) to toggle this feature.
+
+Log each prompt in server logs for debug visibility (strip input for security).
+
+Keep all code modular and MVP-level clean.
+
+
+📦 Constraints:
+
+Use Go and React (Kiali's tech stack).
+
+Keep it self-contained — do not break existing features.
+
+Do not send data to external services — assume LLM is local only.
+
+
+🛡 Security Notes:
+
+Sanitize any sensitive data before sending to LLM.
+
+This is an MVP; minimal error handling is OK.
