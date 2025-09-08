@@ -233,7 +233,7 @@ jobs:
         mv frontend/package.json.tmp frontend/package.json
 
     - name: Set up Go
-      uses: actions/setup-go@v5
+      uses: actions/setup-go@v6
       with:
         go-version-file: go.mod
         cache: true
